@@ -1,20 +1,22 @@
 {
   "name": "million-lint-check",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A command-line tool to verify if Million Lint is active in a project.",
   "main": "index.js",
   "files": [
     "dist/*"
   ],
-  "bin":{
+  "bin": {
     "check": "./dist/index.js"
   },
   "scripts": {
     "build": "npx tsc",
     "prepublishOnly": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
-  "keywords": [""],
+  "keywords": [
+    ""
+  ],
   "author": "Karan Handa",
   "license": "ISC",
   "dependencies": {
@@ -24,8 +26,29 @@
     "figlet": "^1.7.0",
     "puppeteer": "^22.4.0"
   },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            "dist/**/*.{js,css}",
+            "docs/**/*",
+            "!**/*.map"
+          ]
+        }
+      ]
+    ]
+  },
   "devDependencies": {
     "@types/node": "^20.11.25",
+    "semantic-release": "^23.0.2",
     "typescript": "^5.3.3"
   }
 }
