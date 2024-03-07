@@ -9,7 +9,8 @@ import { fuzzPage } from './fuzzer';
 async function checkWhetherMillionWorks( port: string ) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(`http://localhost:${port}`); // Your app's URL here
+  const response = await page.goto(`http://localhost:${port}`); // Your app's URL here
+  console.log(response?.json())
 
   // interact with the website - press buttons, type random strings in boxes, click random things, etc.
   await fuzzPage(page);
