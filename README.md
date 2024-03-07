@@ -18,7 +18,7 @@ Million Lint Checker is a command line tool that automatically detects whether M
 It works by doing the following things - 
 1. Detects package manager and does local setup using [@antfu/ni](https://www.npmjs.com/package/@antfu/ni)
 3. Runs [@million/lint](https://www.npmjs.com/package/@million/lint)
-4. Randomly interacts (fuzzes) with the client and detects Million Lint suggestions using [puppeteer](https://www.npmjs.com/package/puppeteer)
+4. Randomly interacts (fuzzes) with the frontend and detects Million Lint suggestions in the shadow DOM using [puppeteer](https://www.npmjs.com/package/puppeteer)
 
 ## Installation
 - Run `npx million-lint-check@latest setup $PORT`, where `$PORT` is the port your frontend will run on in development.
