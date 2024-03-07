@@ -1,8 +1,0 @@
-{
-  "main": "./observe.cjs",
-  "esnext": "./observe.esnext.js",
-  "module": "./observe.js",
-  "unpkg": "./observe.umd.js",
-  "umd:main": "./observe.umd.js",
-  "types": "./observe.d.ts"
-}
