@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+const pjson = require('./package.json');
 
 import { Command } from 'commander';
 import { execSync } from 'child_process';
@@ -27,9 +27,9 @@ async function checkWhetherMillionWorks( port: string ) {
 const program = new Command();
 
 program
-  .name('my-cli')
+  .name('million-lint-check')
   .description('CLI to setup and run a project with Million Lint')
-  .version('0.1.0');
+  .version(pjson.version);
 
 program.command('setup')
   .requiredOption('-p, --port', 'Application client port')
@@ -43,7 +43,7 @@ program.command('setup')
     try {
       execSync('npx @million/lint@latest', { stdio: 'inherit' });
     } catch {
-      
+
     }
 
     console.log('Running development server...');
