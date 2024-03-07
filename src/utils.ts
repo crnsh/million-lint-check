@@ -37,7 +37,7 @@ export async function checkWhetherMillionWorks( port: number, devServer: ChildPr
   const url = `http://localhost:${port}`
   const page = await tryConnect(url, browser, 100)
   if (!page) {
-    exit()
+    throw new Error("Could not connect to page!")
   }
   await page.goto(url, { waitUntil: ['networkidle0', 'load'] });
 
@@ -46,7 +46,7 @@ export async function checkWhetherMillionWorks( port: number, devServer: ChildPr
   await fuzzPage(page);
 
   // check whether the element that has class name 'million-embed' also has class name 'active'
-  console.log(`Finding element...`);
+  console.log(`Finding Million Element...`);
   const isActiveHandle = await page.evaluateHandle(() => {
     const element = document!.querySelector("body > div:nth-child(4)")!.shadowRoot!.querySelector("div > div")
     return element?.classList.contains('active')
@@ -54,6 +54,8 @@ export async function checkWhetherMillionWorks( port: number, devServer: ChildPr
   const active = await isActiveHandle.jsonValue()
   if (active) {
     console.log('Million Lint is working as expected!');
+  } else {
+    throw new Error('Million not working!')
   }
 
   await browser.close();

@@ -1,6 +1,6 @@
 {
   "name": "million-lint-check",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A command-line tool to verify if Million Lint is active in a project.",
   "main": "index.js",
   "files": [
