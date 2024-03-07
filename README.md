@@ -25,6 +25,7 @@ It works by doing the following things -
 #### Note
 - For some projects setup will have to be done manually. Once the project is at a state where a simple `npm run dev` is sufficient to run it, this tool can be used.
 - This only works with VSCode
+- I've only tested this on the project below ;_; (should work for all `nr dev` projects)
 
 ## Example
 We'll test the CLI on `crnsh/github-h-index` as an example
