@@ -13,8 +13,7 @@ export async function tryConnect(url: string, browser: Browser, maxAttempts = 10
           const page = await browser.newPage();
           await page.goto(url, {waitUntil: 'networkidle2'});
           console.log(`Successfully connected to ${url} after ${attempts} attempt(s).`);
-          // Perform your Puppeteer tasks here
-          return page; // Connection successful
+          return page;
       } catch (error) {
           if (error instanceof Error)
             console.log(`Attempt ${attempts} failed. Error: ${error.message}`);
@@ -23,13 +22,13 @@ export async function tryConnect(url: string, browser: Browser, maxAttempts = 10
               return false
           } else {
               console.log(`Retrying in 5 seconds...`);
-              await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
-              return attemptConnection(); // Recursively try again
+              await new Promise(resolve => setTimeout(resolve, 5000));
+              return attemptConnection();
           }
       }
   }
 
-  return attemptConnection(); // Start the first attempt
+  return attemptConnection();
 }
 
 export async function checkWhetherMillionWorks( port: number, devServer: ChildProcess ) {

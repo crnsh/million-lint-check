@@ -19,13 +19,11 @@ program.command('setup')
   .argument('<port>', 'Frontend port', myParseInt)
   .description('Sets up the Million Lint in the project')
   .action(async (port: number, options) => {
-    // Function to kill the development server
     function killDevServer() {
       console.log('\nShutting down development server...');
       process.kill(-devServer!.pid!); // Kill the process group
     }
 
-    // Listen for termination signals
     process.on('SIGINT', killDevServer);
     process.on('SIGTERM', killDevServer);
     process.on('SIGUSR1', killDevServer);
@@ -46,7 +44,6 @@ program.command('setup')
     }
 
     console.log('Running development server...');
-    // Start the development server in the background
     const devServer = spawn('nr', ['dev'], {
       stdio: 'inherit',
       shell: true,
