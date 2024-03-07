@@ -47,12 +47,12 @@ export async function checkWhetherMillionWorks( port: number, devServer: ChildPr
 
   // check whether the element that has class name 'million-embed' also has class name 'active'
   console.log(`Finding element...`);
-  const isActive = await page.evaluateHandle(() => {
+  const isActiveHandle = await page.evaluateHandle(() => {
     const element = document!.querySelector("body > div:nth-child(4)")!.shadowRoot!.querySelector("div > div")
     return element?.classList.contains('active')
   });
-  console.log(isActive)
-  if (isActive) {
+  const active = await isActiveHandle.jsonValue()
+  if (active) {
     console.log('Million Lint is working as expected!');
   }
 
