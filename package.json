@@ -7,7 +7,7 @@
     "dist/*"
   ],
   "bin": {
-    "check": "./dist/index.js setup"
+    "check": "./dist/index.js"
   },
   "scripts": {
     "build": "npx tsc",
