@@ -2,6 +2,7 @@ import { InvalidArgumentError } from "commander";
 import { fuzzPage } from "./fuzzer";
 import puppeteer, { Browser } from "puppeteer";
 import { exit } from "process";
+import { ChildProcess } from "child_process";
 
 export async function tryConnect(url: string, browser: Browser, maxAttempts = 10) {
   let attempts = 0;
@@ -19,7 +20,7 @@ export async function tryConnect(url: string, browser: Browser, maxAttempts = 10
             console.log(`Attempt ${attempts} failed. Error: ${error.message}`);
           if (attempts >= maxAttempts) {
               console.log('Max attempts reached. Giving up.');
-              exit(1)
+              return false
           } else {
               console.log(`Retrying in 5 seconds...`);
               await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
@@ -31,20 +32,26 @@ export async function tryConnect(url: string, browser: Browser, maxAttempts = 10
   return attemptConnection(); // Start the first attempt
 }
 
-
-export async function checkWhetherMillionWorks( port: number ) {
-  const browser = await puppeteer.launch();
+export async function checkWhetherMillionWorks( port: number, devServer: ChildProcess ) {
+  const browser = await puppeteer.launch({ headless: false });
   const url = `http://localhost:${port}`
   const page = await tryConnect(url, browser, 100)
-  const response = await page.goto(url); // Your app's URL here
-  console.log(response?.json())
+  if (!page) {
+    exit()
+  }
+  await page.goto(url, { waitUntil: ['networkidle0', 'load'] });
 
   // interact with the website - press buttons, type random strings in boxes, click random things, etc.
+  console.log(`Randomly interacting with page...`);
   await fuzzPage(page);
 
   // check whether the element that has class name 'million-embed' also has class name 'active'
-  const element = await page.$('.million-embed');
-  const isActive = await page.evaluate((el) => el!.classList.contains('active'), element);
+  console.log(`Finding element...`);
+  const isActive = await page.evaluateHandle(() => {
+    const element = document!.querySelector("body > div:nth-child(4)")!.shadowRoot!.querySelector("div > div")
+    return element?.classList.contains('active')
+  });
+  console.log(isActive)
   if (isActive) {
     console.log('Million Lint is working as expected!');
   }

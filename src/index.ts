@@ -19,6 +19,18 @@ program.command('setup')
   .argument('<port>', 'Frontend port', myParseInt)
   .description('Sets up the Million Lint in the project')
   .action(async (port: number, options) => {
+    // Function to kill the development server
+    function killDevServer() {
+      console.log('\nShutting down development server...');
+      process.kill(-devServer!.pid!); // Kill the process group
+    }
+
+    // Listen for termination signals
+    process.on('SIGINT', killDevServer);
+    process.on('SIGTERM', killDevServer);
+    process.on('SIGUSR1', killDevServer);
+    process.on('SIGUSR2', killDevServer);
+        
     if (!(Number.isInteger(port) && 0 <= port && port <= 65535)) {
       console.log('Invalid port!')
       exit(1)
@@ -41,10 +53,18 @@ program.command('setup')
       detached: true,
     });
     console.log('Development server started in the background.');
-    devServer.unref();
 
     console.log('Opening browser and interacting with components...');
-    await checkWhetherMillionWorks(port)
+    try {
+      await checkWhetherMillionWorks(port, devServer)
+    } catch(error : any) {
+      console.log(error.message)
+      killDevServer()
+      exit(1)
+    } finally {
+      killDevServer()
+      exit(0)
+    }
   });
 
 program.parse(process.argv);
