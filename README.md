@@ -4,6 +4,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/actions/workflow/status/crnsh/million-lint-check/release.yml">
   <img src="https://img.shields.io/npm/v/million-lint-check">
+  <img src="https://img.shields.io/npm/v/million-lint-check">
   <img src="https://img.shields.io/npm/l/million-lint-check">
   <img src="https://img.shields.io/npm/dt/million-lint-check">
 </p>
@@ -21,7 +22,7 @@ It works by doing the following things -
 ## Installation
 - Run `npx million-lint-check@latest setup $PORT`, where `$PORT` is the port your frontend will run on in development.
 
-Note - 
+#### Note
 - For some projects setup will have to be done manually. Once the project is at a state where a simple `npm run dev` is sufficient to run it, this tool can be used.
 - This only works with VSCode
 
