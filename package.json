@@ -1,14 +1,21 @@
 {
-  "name": "million-lint-test-cli",
+  "name": "million-lint-check",
   "version": "1.0.0",
-  "description": "",
+  "description": "A command-line tool to verify if Million Lint is active in a project.",
   "main": "index.js",
+  "files": [
+    "dist/*"
+  ],
+  "bin":{
+    "check": "./dist/index.js"
+  },
   "scripts": {
     "build": "npx tsc",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [""],
+  "author": "Karan Handa",
   "license": "ISC",
   "dependencies": {
     "@antfu/ni": "^0.21.12",

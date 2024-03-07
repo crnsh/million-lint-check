@@ -1,13 +1,25 @@
 #!/usr/bin/env node
 
+
 import { Command } from 'commander';
 import { execSync } from 'child_process';
 import puppeteer from 'puppeteer';
+import { fuzzPage } from './fuzzer';
 
-async function interactWithBrowser( port: string ) {
+async function checkWhetherMillionWorks( port: string ) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('http://localhost:3000'); // Your app's URL here
+  await page.goto(`http://localhost:${port}`); // Your app's URL here
+
+  // interact with the website - press buttons, type random strings in boxes, click random things, etc.
+  await fuzzPage(page);
+
+  // check whether the element that has class name 'million-embed' also has class name 'active'
+  const element = await page.$('.million-embed');
+  const isActive = await page.evaluate((el) => el!.classList.contains('active'), element);
+  if (isActive) {
+    console.log('Million Lint is working as expected!');
+  }
 
   await browser.close();
 }
@@ -28,13 +40,17 @@ program.command('setup')
     console.log('Installing Million Lint and other dependencies...');
     execSync('npm i -g @antfu/ni', { stdio: 'inherit' });
     execSync('ni', { stdio: 'inherit' });
-    execSync('npx @million/lint@latest', { stdio: 'inherit' });
+    try {
+      execSync('npx @million/lint@latest', { stdio: 'inherit' });
+    } catch {
+      
+    }
 
     console.log('Running development server...');
     execSync('nr dev', { stdio: 'inherit' });
 
     console.log('Opening browser and interacting with components...');
-    await interactWithBrowser(options.port)
+    await checkWhetherMillionWorks(options.port)
   });
 
 program.parse(process.argv);
