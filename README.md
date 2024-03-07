@@ -21,12 +21,15 @@ It works by doing the following things -
 ## Installation
 - Run `npx million-lint-check@latest setup $PORT`, where `$PORT` is the port your frontend will run on in development.
 
-Note - For some projects setup will have to be done manually. Once the project is at a state where a simple `npm run dev` is sufficient to run it, this tool can be used.
+Note - 
+- For some projects setup will have to be done manually. Once the project is at a state where a simple `npm run dev` is sufficient to run it, this tool can be used.
+- This only works with VSCode
 
 ## Example
 We'll test the CLI on `crnsh/github-h-index` as an example
 1. `git clone https://github.com/crnsh/github-h-index.git`
 2. `cd github-h-index`
+2. `code .` (This is temporarily necessary)
 3. `npx million-lint-check@latest setup 3000`
 ```
 Running development server...
@@ -36,9 +39,8 @@ Opening browser and interacting with components...
 > github_h-index@0.1.0 dev
 > next dev
 
- ⚠ Port 3000 is in use, trying 3001 instead.
    ▲ Next.js 14.1.1
-   - Local:        http://localhost:3001
+   - Local:        http://localhost:3000
 
 
  ⚡ Million Lint v0.0.66
@@ -47,7 +49,7 @@ Opening browser and interacting with components...
  ○ Compiling / ...
  ✓ Compiled / in 1158ms (380 modules)
  ✓ Compiled in 180ms (380 modules)
-Successfully connected to http://localhost:3001 after 1 attempt(s).
+Successfully connected to http://localhost:3000 after 1 attempt(s).
 Randomly interacting with page...
 Finding element...
 Million Lint is working as expected!
