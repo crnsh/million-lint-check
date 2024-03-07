@@ -3,8 +3,9 @@
 </div>
 <p align="center">
   <img src="https://img.shields.io/github/actions/workflow/status/crnsh/million-lint-check/release.yml">
-  <img src="https://img.shields.io/npm/v/million-lint-check">
-  <img src="https://img.shields.io/npm/v/million-lint-check">
+  <a href="https://www.npmjs.com/package/million-lint-check">
+    <img src="https://img.shields.io/npm/v/million-lint-check">
+  </a>
   <img src="https://img.shields.io/npm/l/million-lint-check">
   <img src="https://img.shields.io/npm/dt/million-lint-check">
 </p>
