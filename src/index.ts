@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const pjson = require('./package.json');
+const pjson = require('../package.json');
 
 import { Command } from 'commander';
 import { execSync, spawn } from 'child_process';
