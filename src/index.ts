@@ -2,7 +2,7 @@
 const pjson = require('./package.json');
 
 import { Command } from 'commander';
-import { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import puppeteer from 'puppeteer';
 import { fuzzPage } from './fuzzer';
 
@@ -42,12 +42,19 @@ program.command('setup')
     execSync('ni', { stdio: 'inherit' });
     try {
       execSync('npx @million/lint@latest', { stdio: 'inherit' });
-    } catch {
-
+    } catch(error) {
+      console.error('Error running Million Lint:', error);
     }
 
     console.log('Running development server...');
-    execSync('nr dev', { stdio: 'inherit' });
+    // Start the development server in the background
+    const devServer = spawn('nr', ['dev'], {
+      stdio: 'inherit',
+      shell: true,
+      detached: true,
+    });
+    console.log('Development server started in the background.');
+    devServer.unref();
 
     console.log('Opening browser and interacting with components...');
     await checkWhetherMillionWorks(options.port)
