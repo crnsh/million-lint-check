@@ -34,8 +34,9 @@ program.command('setup')
       exit(1)
     }
 
-    console.log('Installing Million Lint and other dependencies...');
+    console.log('Installing Million Lint, Million Lint VSCode extension and other dependencies...');
     execSync('npm i -g @antfu/ni', { stdio: 'inherit' });
+    execSync('code --install-extension million.million-lint', { stdio: 'inherit' });
     execSync('ni', { stdio: 'inherit' });
     try {
       execSync('npx @million/lint@latest', { stdio: 'inherit' });
